@@ -25,14 +25,15 @@ function detectAndReportAttempt(line) {
     fs.appendFile(attemptsReport, ip + '\r\n', function (err) {
       if (err) return console.log(err);
     });
+    return true;
   }
+  return false;
 }
 
 function parseLine(line) {
   lineArray = String(line).split(',');
 
   if (lineArray[2] == 'FAILURE') {
-    console.log(lineArray[2]);
     addToSuspiciusArray(lineArray);
     let suspiciousPosition = isAttackAttempt(suspiciousArray, lineArray[0]);
     if (suspiciousPosition != -1) {
@@ -50,7 +51,6 @@ function addToSuspiciusArray(lineArray) {
     addLine(suspiciousArray, lineArray);
   } else {
     i = existingIp(suspiciousArray, lineArray[0]);
-    console.log(i);
     if (i != -1) {
 
       if ((parseInt(lineArray[1]) - parseInt(suspiciousArray[i][1]) > 300000)) {
@@ -58,24 +58,18 @@ function addToSuspiciusArray(lineArray) {
         suspiciousArray.push([lineArray[0], lineArray[1], 1]);
       }
       else {
-        console.log('old code:' + suspiciousArray[i]);
         suspiciousArray[i][2] = parseInt(suspiciousArray[i][2]) + 1;
-        console.log('new code:' + suspiciousArray[i]);
       }
     }
     else {
-      console.log('else' + lineArray[0]);
       addLine(suspiciousArray, lineArray);
     }
   }
-
   console.log('suspiciousArray:');
   console.log(suspiciousArray);
-
 }
 
 function existingIp(array, value) {
-  console.log(array[0][0] + 'HHHH ' + value + ' ' + array.length);
   for (var i = 0, len = array.length; i < len; i++) {
 
     if (array[i][0] == value) {

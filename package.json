@@ -2,16 +2,15 @@
   "name": "log-detector",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "log-detector.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "keywords": [],
-  "author": "",
+  "author": "Giovanni Soares",
   "license": "ISC",
   "dependencies": {
     "log-timestamp": "^0.3.0",
-    "md5": "^2.3.0",
     "read-last-lines": "^1.8.0"
   },
   "devDependencies": {
